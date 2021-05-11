@@ -1,0 +1,80 @@
+{
+    "_id": "Naughty",
+    "discord": "None",
+    "GuildMaster": "Harfang",
+    "discordRole": "DISCORD ROLE NAME HERE",
+    "requirements": {
+        "Skywars": {
+
+        },
+        "TNTGames": {
+
+        },
+        "Duels": {
+
+        },
+        "Arcade": {
+
+        },
+        "HungerGames": {
+
+        },
+        "VampireZ": {
+
+        },
+        "GingerBread": {
+
+        },
+        "PaintBall": {
+
+        },
+        "Quake": {
+
+        },
+        "Legacy": {
+            
+        },
+        "MCGO": {
+
+        },
+        "Bedwars": {
+
+        },
+        "BuildBattle": {
+
+        },
+        "Skyblock": {
+
+        },
+        "UHC": {
+
+        },
+        "MurderMystery": {
+
+        },
+        "Walls": {
+
+        },
+        "Pit": {
+
+        },
+        "Battleground": {
+
+        },
+        "SuperSmash": {
+
+        },
+        "Walls3": {
+
+        },
+        "Arena": {
+
+        },
+        "TrueCombat": {
+
+        },
+        "SpeedUHC": {
+            
+        }
+    }
+}
