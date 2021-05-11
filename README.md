@@ -1,3 +1,3 @@
 # Hypixel Guild Finder
 
-* To be completed
+> To be completed
