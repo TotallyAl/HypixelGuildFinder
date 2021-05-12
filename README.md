@@ -1,3 +1,5 @@
 # Hypixel Guild Finder
 
-> To be completed
+> **Welcome to the Hypixel Guild Finder discord server**
+1. Rules:
+    1. Please do not swear 

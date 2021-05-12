@@ -121,13 +121,15 @@ class Guild(commands.Cog):
             UUID = account["Minecraft UUID"]
             #Variables for looking if the player is in a guild
             GUILD = requests.get(f"https://api.hypixel.net/findGuild?key={self.API_KEY}&byUuid={account['Minecraft UUID']}").json()
+            if GUILD["guild"] == "null":
+                await ctx.send("You are not in a guild.")
+                return
             find_guild = requests.get(f"https://api.hypixel.net/guild?key={self.API_KEY}&id={GUILD['guild']}").json()
             try:
                 user = find_guild["guild"]["members"]
                 guild_name = find_guild["guild"]["name"]
             except KeyError:
-                await ctx.send("Are you sure that you are in a guild ?")
-                return
+                await ctx.send("API error: You have already looked up this name recently")
             #Variables to find if the guild is already registered
             find = {"_id": f"{guild_name}"}
             output = self.guild.find_one(find)
