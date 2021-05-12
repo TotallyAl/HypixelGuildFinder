@@ -7,7 +7,10 @@ import requests
 class LookUp(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.API_KEY = '28c4f2e7-229e-418f-8fa8-490ab83fdda5'
+
+        with open("apikey.cfg") as f:
+            self.API_KEY = f.read()
+
         with open("mongodb.cfg") as f:
             self.PASSWORD = f.read()
 

@@ -9,6 +9,9 @@ class Guild(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+        with open("apikey.cfg") as f:
+            self.API_KEY = f.read()
+
         self.API_KEY = "28c4f2e7-229e-418f-8fa8-490ab83fdda5"
 
         with open("mongodb.cfg") as f:

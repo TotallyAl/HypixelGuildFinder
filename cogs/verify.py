@@ -8,7 +8,9 @@ from pymongo import MongoClient
 class Verify(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.API_KEY = '28c4f2e7-229e-418f-8fa8-490ab83fdda5'
+
+        with open("apikey.cfg") as f:
+            self.API_KEY = f.read()
 
         with open("mongodb.cfg") as f:
             self.PASSWORD = f.read()
@@ -57,21 +59,24 @@ class Verify(commands.Cog):
     @commands.command()
     @commands.has_role("Linked")
     async def unverify(self, ctx):
-        user = ctx.author
-        add_role = "Unlinked"
-        rm_role = "Linked"
-        delete_account = {"_id": ctx.author.id}
-        find = {"_id": ctx.author.id}
-        minecraft_account_name = self.account.find_one(find)
-        self.account.delete_one(delete_account)
-        ADD = get(user.guild.roles, name=add_role)
-        RM = get(user.guild.roles, name=rm_role)
-        delete_guild = {"guild_master": f"{minecraft_account_name['Minecraft Username']}"}
-        self.guild.delete_one(delete_guild)
-        await user.add_roles(ADD)
-        await user.remove_roles(RM)
-        await ctx.send("Your account has been unlinked !")
-        await ctx.send("All of your files were deleted !")
+        try:
+            user = ctx.author
+            add_role = "Unlinked"
+            rm_role = "Linked"
+            delete_account = {"_id": ctx.author.id}
+            find = {"_id": ctx.author.id}
+            minecraft_account_name = self.account.find_one(find)
+            self.account.delete_one(delete_account)
+            ADD = get(user.guild.roles, name=add_role)
+            RM = get(user.guild.roles, name=rm_role)
+            delete_guild = {"guild_master": f"{minecraft_account_name['Minecraft Username']}"}
+            self.guild.delete_one(delete_guild)
+            await user.add_roles(ADD)
+            await user.remove_roles(RM)
+            await ctx.send("Your account has been unlinked !")
+            await ctx.send("All of your files were deleted !")
+        except:
+            await ctx.send("You are not registered.")
         
 
 def setup(client):
