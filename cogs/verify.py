@@ -51,7 +51,7 @@ class Verify(commands.Cog):
                         "Minecraft UUID": UUID
                     }
                     self.account.insert_one(link)
-                    verifySuccess = discord.Embed(title='The account verification was successful', description='The discord account: **Harfang#4149** was linked to the Minecraft account: **Harfang**.', color=discord.Colour.from_rgb(0, 255, 122))
+                    verifySuccess = discord.Embed(title='The account verification was successful', description=f'The discord account: **{discord_tag}** was linked to the Minecraft account: **{username}**.', color=discord.Colour.from_rgb(0, 255, 122))
                     verifySuccess.set_author(name='Account Verification', icon_url="https://emoji.gg/assets/emoji/1779_check.png")
                     verifySuccess.set_footer(text='•Hypixel Guild Finder | made by Harfang#4149', icon_url='https://vignette.wikia.nocookie.net/youtube/images/9/90/Hypixel.jpg/revision/latest?cb=20180708014516')
                     await ctx.send(embed=verifySuccess)
@@ -80,24 +80,32 @@ class Verify(commands.Cog):
 
     @commands.command()
     async def unverify(self, ctx, confirm=None):
-        try:
-            user = ctx.author
-            add_role = "Unlinked"
-            rm_role = "Linked"
-            delete_account = {"_id": ctx.author.id}
-            find = {"_id": ctx.author.id}
-            minecraft_account_name = self.account.find_one(find)
-            self.account.delete_one(delete_account)
-            ADD = get(user.guild.roles, name=add_role)
-            RM = get(user.guild.roles, name=rm_role)
-            delete_guild = {"guild_master": f"{minecraft_account_name['Minecraft Username']}"}
-            self.guild.delete_one(delete_guild)
-            await user.add_roles(ADD)
-            await user.remove_roles(RM)
-            await ctx.send("Your account has been unlinked !")
-            await ctx.send("All of your files were deleted !")
-        except:
-            await ctx.send("You are not registered.")
+        if confirm != "confirm":
+            await ctx.send("Please use the correct password !")
+        else:
+            try:
+                user = ctx.author
+                add_role = "Unlinked"
+                rm_role = "Linked"
+                delete_account = {"_id": ctx.author.id}
+                find = {"_id": ctx.author.id}
+                minecraft_account_name = self.account.find_one(find)
+                self.account.delete_one(delete_account)
+                ADD = get(user.guild.roles, name=add_role)
+                RM = get(user.guild.roles, name=rm_role)
+                delete_guild = {"guild_master": f"{minecraft_account_name['Minecraft Username']}"}
+                self.guild.delete_one(delete_guild)
+                await user.add_roles(ADD)
+                await user.remove_roles(RM)
+                verifySuccess = discord.Embed(title='The account unverification was successful', description='Your account was deleted. \n All of your files(Personnal database and Guild database) has been successfully deleted.', color=discord.Colour.from_rgb(0, 255, 122))
+                verifySuccess.set_author(name='Account Verification', icon_url="https://emoji.gg/assets/emoji/1779_check.png")
+                verifySuccess.set_footer(text='•Hypixel Guild Finder | made by Harfang#4149', icon_url='https://vignette.wikia.nocookie.net/youtube/images/9/90/Hypixel.jpg/revision/latest?cb=20180708014516')
+                await ctx.send(embed=verifySuccess)
+            except:
+                verifyError = discord.Embed(title='The account unverification was not possible', url='https://github.com/TotallyAl/HypixelGuildFinder/blob/main/README.md', description='You do not have an account to delete.', color=discord.Colour.from_rgb(70, 67, 61))
+                verifyError.set_author(name='Account Verification', icon_url="https://emoji.gg/assets/emoji/5053_Gears.png")
+                verifyError.set_footer(text="•Hypixel Guild Finder | made by Harfang#4149", icon_url="https://vignette.wikia.nocookie.net/youtube/images/9/90/Hypixel.jpg/revision/latest?cb=20180708014516")
+                await ctx.send(embed=verifyError)
             
 
 def setup(client):
